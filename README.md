@@ -55,11 +55,11 @@ export default class Main extends Component {
 
 The results is:
 
-![image](https://cloud.githubusercontent.com/assets/2588829/14859734/2f30efcc-0cae-11e6-916f-c686c36d26ec.png | width=200)
+<img src="https://cloud.githubusercontent.com/assets/2588829/14859734/2f30efcc-0cae-11e6-916f-c686c36d26ec.png" width=200>
 
-![image](https://cloud.githubusercontent.com/assets/2588829/14859802/77da7ae0-0cae-11e6-8e08-8d094d97555b.png | width=200)
+<img src="https://cloud.githubusercontent.com/assets/2588829/14859802/77da7ae0-0cae-11e6-8e08-8d094d97555b.png" width=200>
 
-![image](https://cloud.githubusercontent.com/assets/2588829/14859749/4049196a-0cae-11e6-948a-62a2c09f9650.png | width=200)
+<img src="https://cloud.githubusercontent.com/assets/2588829/14859749/4049196a-0cae-11e6-948a-62a2c09f9650.png" width=200>
 
 #### How to run
 - Add googleAppId and orchestrateToken to the config.js file
