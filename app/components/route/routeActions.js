@@ -1,9 +1,9 @@
-import config from '../../../config';
+import config from '../../config';
 
 export const ROUTE = 'ROUTE';
 
 const initialState = {
-  route: config.app.routes[0]
+  route: null
 }
 
 export function reducer(state = initialState, action) {

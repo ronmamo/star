@@ -1,11 +1,11 @@
-require( 'babel-core/register' )({
+require('babel-core/register')({
   ignore: /node_modules/,
-  presets: [ 'es2015', 'stage-0', 'react' ],
-  plugins: [ 'transform-decorators-legacy', 'transform-runtime' ]
+  presets: ['es2015', 'stage-0', 'react'],
+  plugins: ['transform-decorators-legacy', 'transform-runtime']
 });
 
 require('css-modules-require-hook')({
-  generateScopedName: '[path][name]-[local]',
+  generateScopedName: '[path][name]-[local]'
 });
 
 var express = require('express');
@@ -14,31 +14,32 @@ var webpack = require('webpack');
 var webpackconfig = require('./webpack/webpack.config');
 var compiler = webpack(webpackconfig);
 var chalk = require('chalk');
-var config = require('../config').default;
 
-const usersRouter = require('./routes/usersRouter');
-
-// orchestrate
-console.log(chalk.green("config"), config);
-var oio = require('orchestrate');
-const orchestrateToken = config.db.orchestrateToken;
-const db = oio(orchestrateToken);
-console.log(chalk.bold.green("db connected"), db);
+// models
+var models = require('./models').default;
 
 // app
-var app = express();
+var config = require('./config').default;
+console.log(chalk.green("config"), config);
 
-// users routes
-usersRouter.init(app, db);
+var app = express();
+var router = express.Router();
+
+const routes = require('./routes').default;
+routes(router, models);
+
+app.use(router);
+
 
 // Serve hot-reloading bundle to client
 app.use(require("webpack-dev-middleware")(compiler, {
-  noInfo: true, publicPath: webpackconfig.output.publicPath
+  noInfo: true, publicPath: webpackconfig.output.publicPath,
+  stats: 'errors-only'
 }));
 app.use(require("webpack-hot-middleware")(compiler));
 
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html');
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/index.html');
 });
 
 // Do "hot-reloading" of express stuff on the server
@@ -46,10 +47,10 @@ app.get('/', function(req, res){
 // Ensure there's no important state in there!
 var watcher = chokidar.watch('./server');
 
-watcher.on('ready', function() {
-  watcher.on('all', function() {
+watcher.on('ready', function () {
+  watcher.on('all', function () {
     console.log("Clearing /server/ module cache from server");
-    Object.keys(require.cache).forEach(function(id) {
+    Object.keys(require.cache).forEach(function (id) {
       if (/[\/\\]server[\/\\]/.test(id)) delete require.cache[id];
     });
   });
@@ -57,9 +58,9 @@ watcher.on('ready', function() {
 
 // Do "hot-reloading" of react stuff on the server
 // Throw away the cached client modules and let them be re-required next time
-compiler.plugin('done', function() {
+compiler.plugin('done', function () {
   console.log("Clearing /app/ module cache from server");
-  Object.keys(require.cache).forEach(function(id) {
+  Object.keys(require.cache).forEach(function (id) {
     if (/[\/\\]app[\/\\]/.test(id)) delete require.cache[id];
   });
 });
@@ -67,7 +68,7 @@ compiler.plugin('done', function() {
 // server
 var http = require('http');
 var server = http.createServer(app);
-server.listen(3000, 'localhost', function(err) {
+server.listen(3000, 'localhost', function (err) {
   if (err) throw err;
 
   var addr = server.address();

@@ -43,6 +43,7 @@ module.exports = {
               "presets": ["react-hmre"],
               "plugins": [
                 ["transform-decorators-legacy",
+                  "transform-dev-warning",
                   "react-transform", {
                   "transforms": [{
                     "transform": "react-transform-hmr",

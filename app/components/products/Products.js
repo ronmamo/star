@@ -3,18 +3,18 @@ import {connect} from "react-redux";
 import ModelView from "../models/ModelView";
 
 @connect(state => ({
-  users: state.users.list,
-  selectedUser: state.users.current
+  products: state.products.list,
+  currentProduct: state.products.current
 }))
-export default class Users extends Component {
+export default class Products extends Component {
 
   render() {
     // {...this.props} is needed to pass down the dispatch
     return <ModelView {...this.props}
-      name="user"
-      models={this.props.users}
-      current={this.props.selectedUser}
-      dispatch={dispatch}
+      name="product"
+      models={this.props.products}
+      current={this.props.currentProduct}
+      options={{ edit: true, add: true }}
     />
   }
 }

@@ -8,13 +8,18 @@ import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 import {deepOrange500} from 'material-ui/lib/styles/colors';
 import Helmet from 'react-helmet';
 import Main from './main';
-import config from '../config';
+import config from './config';
 
 import { reducer as logged } from "./components/loggedin/loggedinActions";
 import { reducer as geo } from "./components/geolocation/geolocationActions";
-import { reducer as vehicles } from "./components/vehicles/vehicles";
-import { reducer as users } from "./components/users/usersActions";
+import { reducer as vehicles } from "./components/vehicles/vehiclesActions";
 import { reducer as route } from "./components/route/routeActions";
+import { reducer as map } from "./components/map/mapActions";
+import modelActions from './components/models/modelActions';
+
+const users = modelActions('user').reducer;
+const shops = modelActions('shop').reducer;
+const products = modelActions('product').reducer;
 
 // redux store
 const store = createStore(
@@ -23,7 +28,10 @@ const store = createStore(
     geo,
     vehicles,
     users,
-    route
+    route,
+    map,
+    products,
+    shops
   }),
   applyMiddleware(thunk)
 );
@@ -44,7 +52,8 @@ const head = {
   ],
   link: [
 //    {rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'},
-    {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:400,300,500'},
+//     {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:400,300,500'},
+    {rel: 'stylesheet', href: 'http://fonts.googleapis.com/icon?family=Material+Icons'},
     {rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css'}
   ],
   script: [

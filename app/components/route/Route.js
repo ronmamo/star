@@ -6,6 +6,10 @@ import { connect } from "react-redux";
 }))
 export default class Route extends Component {
 
+  static propTypes = {
+    on: PropTypes.object.isRequired // config.app.routes
+  }
+  
   isRoute() {
     return this.props.on === this.props.route;
   }

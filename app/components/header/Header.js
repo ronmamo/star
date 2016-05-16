@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as loggedinActions from "../loggedin/loggedinActions";
 import * as routeActions from "../route/routeActions";
-import config from '../../../config';
+import config from '../../config';
 
 import AppBar from 'material-ui/lib/app-bar';
 import IconButton from 'material-ui/lib/icon-button';
@@ -32,12 +32,14 @@ export default class Header extends Component {
   }
 
   render() {
-    const { title, currentUser } = this.props;
-    const isLoggedIn = currentUser && loggedinActions.isLoggedIn();
-    let menuItems = [];
+    const title = config.app.title || config.app.name;
+    const isLoggedIn = this.props.currentUser && loggedinActions.isLoggedIn();
+    const routes = config.app.routes;
+    let menuItems = isLoggedIn ? Object.keys(routes).map(route =>
+      <MenuItem key={route} primaryText={route} onClick={e => this.props.doRoute(routes[route])} />)
+      : [];
     if (isLoggedIn) {
-      menuItems = config.app.routes.map(route =>
-        <MenuItem key={route} primaryText={route} onClick={e => this.props.doRoute(route)} />);
+      menuItems.push(<MenuItem key="logout" primaryText="Logout" onClick={e => this.onLogout()} />);
     }
 
     return (
