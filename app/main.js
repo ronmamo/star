@@ -4,7 +4,7 @@ import Route from './components/route/Route';
 import LoggedIn from './components/loggedin/LoggedIn';
 import GeoLocation from './components/geolocation/GeoLocation';
 import VehicleSocket from "./components/vehicles/VehicleSocket";
-import Map from "./components/map/Map";
+import MapWrap from "./components/mapwrap/MapWrap";
 import Users from "./components/users/Users";
 import CurrentUser from "./components/users/CurrentUser";
 import Vehicles from "./components/vehicles/Vehicles";
@@ -20,16 +20,16 @@ export default class Main extends Component {
   render() {
     return (
       <div>
-        <Header/>
-        
-        <LoggedIn route={app.routes.Products}>
+        <Header title={config.app.name} routes={config.app.routes}/>
+
+        <LoggedIn route={app.routes.Map}>
 
           <GeoLocation/>
           <CurrentUser/>
 
           <Route on={routes.Map}>
             <VehicleSocket/>
-            <Map/>
+            <MapWrap/>
           </Route>
 
           <Route on={routes.Users}>

@@ -24,6 +24,11 @@ const styles = {
 }), (dispatch, props) => bindActionCreators({...loggedinActions, ...routeActions}, dispatch))
 export default class Header extends Component {
 
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    routes: PropTypes.object
+  }
+
   onLogout() {
     const { currentUser } = this.props;
     this.props.logout().promise.then(() => {
@@ -32,9 +37,8 @@ export default class Header extends Component {
   }
 
   render() {
-    const title = config.app.title || config.app.name;
+    const { title, routes } = this.props;
     const isLoggedIn = this.props.currentUser && loggedinActions.isLoggedIn();
-    const routes = config.app.routes;
     let menuItems = isLoggedIn ? Object.keys(routes).map(route =>
       <MenuItem key={route} primaryText={route} onClick={e => this.props.doRoute(routes[route])} />)
       : [];

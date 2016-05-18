@@ -14,6 +14,7 @@ export default class Shops extends Component {
       models={this.props.shops}
       current={this.props.currentShop}
       options={{ edit: true, add: true }}
+      fields={['description', 'email', 'latitude', 'longitude']}
     />
   }
 }

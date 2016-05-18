@@ -15,6 +15,7 @@ export default class Products extends Component {
       models={this.props.products}
       current={this.props.currentProduct}
       options={{ edit: true, add: true }}
+      fields={['description', 'price']}
     />
   }
 }

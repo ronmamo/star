@@ -3,6 +3,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as vehicleActions from "./vehiclesActions";
 
+const createVehicle = vehicle => {
+  vehicle.name = `${vehicle.type} ${vehicle.routeNumber}`;
+  vehicle.id = vehicle.vehicleID;
+  return vehicle;
+}
 
 if (window.navigator && Object.keys(window.navigator).length == 0) {
   window = Object.assign(window, { navigator: { userAgent: 'ReactNative' }});
@@ -10,8 +15,8 @@ if (window.navigator && Object.keys(window.navigator).length == 0) {
 
 var io = require("socket.io-client/socket.io");
 
-@connect(state => state,
-  (dispatch, props) => bindActionCreators(vehicleActions, dispatch))
+@connect(state => ({
+}), (dispatch, props) => bindActionCreators(vehicleActions, dispatch))
 export default class VehicleSocket extends Component {
 
   componentDidMount() {
@@ -19,7 +24,10 @@ export default class VehicleSocket extends Component {
     this.socket = io('http://pdx-livebus.rhcloud.com:8000', {
       transports: ['websocket']
     });
-    this.socket.on('vehicles_update', (data) => this.props.updateVehicles(data));
+    this.socket.on('vehicles_update', data => {
+      const vehicles = data.map(vehicle => createVehicle(vehicle));
+      this.props.updateVehicles(vehicles);
+    });
   }
 
   componentWillUnmount() {

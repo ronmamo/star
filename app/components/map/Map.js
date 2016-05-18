@@ -17,25 +17,11 @@ const styles = {
 
 const defaultPosition = [
   32.050,
-  34.800,
+  34.800
 ];
 
-export const createMarker = (type, origin, name, location) => {
-//  console.log("create marker", name, location);
-  return {
-    key: name,
-    type: type,
-    origin: origin,
-    routeNumber: name,
-    latitude: location.latitude,
-    longitude: location.longitude
-  }
-}
-
 @connect(state => ({
-  vehicles: state.vehicles,
   location: state.geo.location,
-  users: state.users.users,
   center: state.map.center
 }), (dispatch, props) => bindActionCreators(mapActions, dispatch))
 export default class MapLeaf extends Component {
@@ -58,18 +44,12 @@ export default class MapLeaf extends Component {
     // center
     const { location, center } = this.props;
     const mapCenter = center ? [center.latitude, center.longitude]
-      : location && location.coords ? [location.coords.latitude, location.coords.longitude]
+      : location && location.latitude ? [location.latitude, location.longitude]
       : defaultPosition;
 
     // add markers
-    const { vehicles, users } = this.props;
-    let markers = Object.assign(vehicles) || [];
-    const userMarkers = users && Object.keys(users).map(key => users[key])
-      .map(user => createMarker('bus', user, user.username, (user.location.latitude ? user.location : location.coords)));
-    markers = Object.assign(markers, userMarkers);
-
-    // apply marker view
-    markers.map(marker => {
+    const { markers } = this.props;
+    markers.map((marker, index) => {
       const { routeNumber, type } = marker;
       let classes = {
         [MapCss.marker]: true
@@ -80,6 +60,7 @@ export default class MapLeaf extends Component {
         classes[MapCss.bus] = true;
       }
       marker.icon = divIcon({ className: classnames(classes), html: `<span>${marker.routeNumber}</span>`});
+      marker.key = index;
     })
 
     return (

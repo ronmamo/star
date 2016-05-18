@@ -43,7 +43,8 @@ export default class ModelView extends Component {
     current: PropTypes.object,
     options: PropTypes.object,
     actions: PropTypes.object,
-    view: PropTypes.object
+    view: PropTypes.object,
+    fields: PropTypes.array
   }
 
   constructor(props) {
@@ -100,8 +101,8 @@ export default class ModelView extends Component {
   }
 
   onShow = (e, model) => {
-    if (model.location) {
-      this.Maps.setCenter(model.location);
+    if (model.latitude) {
+      this.Maps.setCenter({latitude: model.latitude, longitude: model.longitude});
       this.Routes.doRoute(config.app.routes.Map);
     }
   }
@@ -175,6 +176,7 @@ export default class ModelView extends Component {
     const modelsList = models ? Object.keys(models).map(key => models[key]).filter(model => model) : [];
     const names = models ? modelsList.map(model => model && model.name || '') : [];
     const {mode, current, editModel, message, dialog} = this.state;
+    const {fields} = this.props;
 
     return (
       <div>
@@ -186,20 +188,25 @@ export default class ModelView extends Component {
 
         { mode == Mode.add ?
           <ModelEdit model={editModel}
+                     fields={fields}
                      onChange={this.onChange} onCancel={this.onCancel} onSave={this.onSave}
                      onDelete={this.onDelete}/>
           :
           modelsList.map(model =>
             mode == Mode.edit && editModel == model ?
-              <ModelEdit model={editModel} key={model.id}
+              <ModelEdit model={editModel}
+                         key={model.id}
+                         fields={fields}
                          onChange={this.onChange} onCancel={this.onCancel} onSave={this.onSave}
                          onDelete={this.onDelete}/>
               :
-              <View model={model} key={model.id}
+              <View model={model}
+                    key={model.id}
+                    fields={fields}
                     expandMode={current !== model}
                     onCardClick={this.onCardClick}
                     onEdit={this.onEdit}
-                    onShow={model.location ? this.onShow : () => {}}/>
+                    onShow={this.onShow}/>
           )}
         { dialog && dialog }
         { message &&
@@ -213,7 +220,7 @@ export default class ModelView extends Component {
   }
 }
 
-const ModelViewBar = ({searchList, onSearch, onAdd}) => (
+export const ModelViewBar = ({searchList, onSearch, onAdd}) => (
   <Table>
     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
       <TableRow>
@@ -232,19 +239,20 @@ const ModelViewBar = ({searchList, onSearch, onAdd}) => (
   </Table>
 )
 
-const ModelCardView = ({model, expandMode = true, onCardClick, onShow, onEdit, onDelete}) => (
+export const ModelCardView = ({model, fields, expandMode = true, onCardClick, onShow, onEdit}) => (
   <Card key={model.id} expanded={expandMode} onExpandChange={e => onCardClick(e, model)}>
     <CardHeader title={model.name}
                 subtitle={`Id: ${model.id}`}
                 actAsExpander={true}
                 showExpandableButton={true}>
     </CardHeader>
-    <CardText expandable={true}>
-      Description: { model.description }
-    </CardText>
-    <CardText expandable={true}>
-      Price: { model.price }
-    </CardText>
+    { (fields || Object.keys(model).filter(key => key !== 'name' && key !== 'id'))
+      .map(key => (
+        <CardText key={key} expandable={true}>
+          {key}: {model[key]}
+        </CardText>
+      ))
+    }
     <CardActions style={styles.right} expandable={true}>
       { onShow && <RaisedButton label="Show" icon={<MapsPlace />} onTouchTap={e => onShow(e, model)}/> }
       { onEdit && <RaisedButton label="Edit" icon={<EditorModeEdit />} onTouchTap={e => onEdit(e, model)}/> }
@@ -252,7 +260,7 @@ const ModelCardView = ({model, expandMode = true, onCardClick, onShow, onEdit, o
   </Card>
 )
 
-const ModelTileView = ({model, expandMode = true, onCardClick, onShow, onEdit, onDelete}) => (
+const ModelTileView = ({model, fields, expandMode = true, onCardClick, onShow, onEdit}) => (
   <GridTile title={model.name}
             subtitle={model.id && `id: ${model.id}`}
             key={model.name}
@@ -261,7 +269,7 @@ const ModelTileView = ({model, expandMode = true, onCardClick, onShow, onEdit, o
   </GridTile>
 )
 
-const ModelEdit = ({model, expandMode = true, onChange, onCancel, onSave, onDelete}) => (
+const ModelEdit = ({model, fields, expandMode = true, onChange, onCancel, onSave, onDelete}) => (
   <div>
     <Card>
       <CardHeader title={model.name}
@@ -276,18 +284,24 @@ const ModelEdit = ({model, expandMode = true, onChange, onCancel, onSave, onDele
       </CardHeader>
       <CardText>
         <br/>
-        <TextField value={model.price}
-                   hintText="Price"
-                   floatingLabelText="Price"
-                   errorText={!model.price ? "This field is required" : ""}
-                   onChange={e => onChange(e, {price: e.target.value})}/>
         <br/>
-        <TextField value={model.description}
-                   hintText="Description"
-                   floatingLabelText="Description"
-                   onChange={e => onChange(e, {description: e.target.value})}
-                   multiLine={true} rows={3} rowsMax={3}/>
-        <br/>
+        { (fields || Object.keys(model).filter(key => key !== 'name' && key !== 'id'))
+          .filter(key => model[key] !== null)
+          .map(key => (
+            <span>
+              <TextField value={model[key]}
+                         hintText={key}
+                         floatingLabelText={key}
+                         errorText={!model[key] ? "This field is required" : ""}
+                         onChange={e => {
+                          let change = {};
+                            change[key] = e.target.value;
+                            onChange(e, change)
+                         }}
+              /><br/>
+            </span>
+          ))
+        }
       </CardText>
       <CardActions style={styles.right}>
         { onDelete &&

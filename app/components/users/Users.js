@@ -14,7 +14,7 @@ export default class Users extends Component {
       name="user"
       models={this.props.users}
       current={this.props.selectedUser}
-      dispatch={dispatch}
+      fields={['username', 'email', 'latitude', 'longitude']}
     />
   }
 }
