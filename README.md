@@ -7,7 +7,7 @@
 
 #### Idea
 
-The idea is to have high order components, that can be added as a one line html tag,
+The idea is to have high order components, that can be added as a **one line html tag**, 
 encapsulating view and global state manipulation using Redux.
 
 For example, in order to have geo location support, just add `<GeoLocation/>` tag.
@@ -15,6 +15,7 @@ For example, in order to have geo location support, just add `<GeoLocation/>` ta
 Then, geo location will be watched and the global state will be updated accordingly.
 
 In any other component where the location is needed, just connect it to Redux and get the value injected:
+
 `
 @connect(state => ({
   location: state.geo.location,
@@ -22,30 +23,45 @@ In any other component where the location is needed, just connect it to Redux an
 }))
 `
 
+In the same manner, another component, `<LoggedIn/>` will take care of google login, updating current user in redux store.
+
+Other elements are `<ModelView/>` in conjuction with `modelActions('entity')` and `sequelizeRouter` that auto create full crud for sequelize defined model exposed via REST, and configurable view with support for read/add/edit/delete (see `Users`, `Shops`, `Products`)
+
 #### Components
 So when the Main component looks like:
 
 ```
 export default class Main extends Component {
-
   render() {
     return (
       <div>
-        <Header title={config.app.title}/>
-        <LoggedIn>
+        <Header title={config.app.name} routes={config.app.routes}/>
 
+        <LoggedIn route={app.routes.Map}>
           <GeoLocation/>
-          <UsersDb/>
+          <CurrentUser/>
 
-          <Route on='Map'>
+          <Route on={routes.Map}>
             <VehicleSocket/>
-            <Map/>
+            <MapWrap/>
           </Route>
 
-          <Route on='Users'>
+          <Route on={routes.Users}>
             <Users/>
           </Route>
 
+          <Route on={routes.Vehicles}>
+            <VehicleSocket/>
+            <Vehicles/>
+          </Route>
+
+          <Route on={routes.Products}>
+            <Products/>
+          </Route>
+
+          <Route on={routes.Shops}>
+            <Shops/> 
+          </Route>
         </LoggedIn>
       </div>
     )
@@ -58,7 +74,7 @@ The result is:
 ![output](https://cloud.githubusercontent.com/assets/2588829/14881376/5d528080-0d3c-11e6-84da-4761912ca004.gif)
 
 #### How to run
-- Add googleAppId and orchestrateToken to the config.js file
+- Add googleAppId to the config.js file
 - npm install
 - npm run dev
 
@@ -69,13 +85,16 @@ The result is:
 - Google login (used in LoggedIn component)
 - [Leaflet](http://leafletjs.com/) OpenStreetMap
 - [material-ui](material-ui.com) ootb (used in Header component)
-- [orchestrate.io](orchestrate.io) - the-very-cool orchestrate db as a service (used in UsersDb component)
+- Sequelize
+- [orchestrate.io](orchestrate.io) - (optional) the-very-cool orchestrate db as a service (used in UsersDb component)
 - socket.io client - for streaming (used in VehicleSocket)
 
 
 #### Laters
-- Make it work for android and ios...
-- Use Springboot instead/supplement of nodejs web/api server
 - **Have an initial set of components for easily building your own flavoured MVP**
-- Redis and/or Graphql support
+- PostGis support including geo queries
 - Paypal integration
+- Redis and/or Graphql support
+- Image uploading
+- Make it work for android and ios...
+- Maybe use Springboot instead/supplement of nodejs web/api server
