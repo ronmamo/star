@@ -71,7 +71,7 @@ export default class Main extends Component {
 
 The result is:
 
-![output](https://cloud.githubusercontent.com/assets/2588829/14881376/5d528080-0d3c-11e6-84da-4761912ca004.gif)
+![untitled](https://cloud.githubusercontent.com/assets/2588829/15377894/bae47fec-1d67-11e6-8cb4-9b8eef0cff25.gif)
 
 #### How to run
 - Add googleAppId to the config.js file
