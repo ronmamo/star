@@ -20,9 +20,9 @@ export default class Main extends Component {
   render() {
     return (
       <div>
-        <Header title={config.app.name} routes={config.app.routes}/>
+        <Header title={app.name} routes={routes}/>
 
-        <LoggedIn route={app.routes.Map}>
+        <LoggedIn route={routes.Map}>
 
           <GeoLocation/>
           <CurrentUser/>
