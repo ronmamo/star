@@ -25,7 +25,7 @@ In any other component where the location is needed, just connect it to Redux an
 
 In the same manner, another component, `<LoggedIn/>` will take care of google login, updating current user in redux store.
 
-Other elements are `<ModelView/>` in conjuction with `modelActions('entity')` and `sequelizeRouter` that auto create full crud for sequelize defined model exposed via REST, and configurable view with support for read/add/edit/delete (see `Users`, `Shops`, `Products`)
+Other elements are `<ModelView/>` in conjuction with `modelActions('entity')` and `sequelizeRouter` that auto create full crud for sequelize defined model, exposes REST via express, and configurable view with support for read/add/edit/delete (see [Users](https://github.com/ronmamo/star/blob/master/app/components/users/Users.js), [Shops](https://github.com/ronmamo/star/blob/master/app/components/shops/Shops.js))
 
 #### Components
 So when the Main component looks like:
@@ -35,9 +35,9 @@ export default class Main extends Component {
   render() {
     return (
       <div>
-        <Header title={config.app.name} routes={config.app.routes}/>
+        <Header title={app.name} routes={routes}/>
 
-        <LoggedIn route={app.routes.Map}>
+        <LoggedIn route={routes.Map}>
           <GeoLocation/>
           <CurrentUser/>
 
@@ -74,19 +74,22 @@ The result is:
 ![untitled](https://cloud.githubusercontent.com/assets/2588829/15377894/bae47fec-1d67-11e6-8cb4-9b8eef0cff25.gif)
 
 #### How to run
-- Add googleAppId to the config.js file
+- edit the server config.js - change the sequelize db settings
+- edit the client config.js - add googleAppId
 - npm install
 - npm run dev
 
 #### Techs
 
+- [React](https://facebook.github.io/react/)/[React-Native](https://facebook.github.io/react-native/)
 - [Redux](https://github.com/reactjs/redux)
-- Webapck w/ hot reload
+- [Webapck](https://webpack.github.io/) w/ hot reload
+- [Express](http://expressjs.com/)
+- [Sequelize](http://docs.sequelizejs.com/)
 - Google login (used in LoggedIn component)
 - [Leaflet](http://leafletjs.com/) OpenStreetMap
 - [material-ui](material-ui.com) ootb (used in Header component)
-- Sequelize
-- [orchestrate.io](orchestrate.io) - (optional) the-very-cool orchestrate db as a service (used in UsersDb component)
+- [orchestrate.io](orchestrate.io) - (optional) the-very-cool orchestrate db as a service
 - socket.io client - for streaming (used in VehicleSocket)
 
 
