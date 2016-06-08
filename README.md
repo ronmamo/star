@@ -7,7 +7,7 @@
 
 ### Idea
 
-The idea is to have and initial set of **high order components** 
+The idea is to have an initial set of **high order components** 
 for easily compose **your own flavoured MVP** in no time. 
 
 The components can be added as a one line html tag, and are encapsulating view and state manipulation using Redux.
@@ -47,7 +47,13 @@ class SomeComponent extends Component {
 
 ### High Order Components
 
-The `component` folder contains some high order components.
+The `components` folder contains some high order components.
+
+Some of the components included:
+- `Map` - leaflet map view
+- `Header`, `Bottom` - material-ui app bar and bottom navigation
+- `CurrentUser` - persist current user changes including profile and geo location
+- `Route` - a very simple routing
 
 For model view and edit, some material-ui components are provided for card/grid/table views, 
 such as `AvatarCardView`, `TableView`, `GridView`, `CardEditView`, `PaperEditView`.
@@ -58,12 +64,7 @@ such as get/find/add/update/delete.
 `viewActions` is an optional simple helper, encapsulating common model view behaviours, 
 such as local models management, mode changes, show dialog and message.
 
-Other components included:
-- `Map` - leaflet map view
-- `Header`, `Bottom` - material-ui app bar and bottom navigation
-- `CurrentUser` - persist current user changes including profile and geo location
-- `Route` - a very simple routing
-
+Example of a model component:
 ```
 @connect(state => ({
   currentUser: state.logged.currentUser
@@ -97,7 +98,7 @@ class MyModel extends Component {
 ```
 
 ### Server side 
-`web-server/server.js` contains an express application, with sequelize support.
+`web-server/server.js` is an express application, with sequelize support.
 
 Just add a model definition to `web-server/models`, 
 and `SequelizeRouter` will be used for adding rest router for each sequelize model definition, exposing: 
