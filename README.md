@@ -166,7 +166,7 @@ export default class Main extends Component {
 
 The result is:
 
-![output](https://cloud.githubusercontent.com/assets/2588829/14881376/5d528080-0d3c-11e6-84da-4761912ca004.gif)
+![output](https://cloud.githubusercontent.com/assets/2588829/15898744/123aae8e-2da2-11e6-8b0e-b2af6f9397e7.gif)
 
 ### How to run
 - Look at web-server/config.js and app/config.js
