@@ -14,6 +14,10 @@ export const withLocation = {
   speed: Sequelize.DECIMAL
 }
 
+export const withImage = {
+  image: Sequelize.BLOB
+}
+
 // export const withGis = {
 //   location: Sequelize.GEOMETRY
 // }

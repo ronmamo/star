@@ -21,6 +21,26 @@
   background-color: #333;
 }
 
+.user {
+  background-color: #008752;
+}
+
+.shop {
+  background-color: #333;
+  -webkit-transition: all 0s ease-in-out;
+  -moz-transition: all 0s ease-in-out;
+  -o-transition: all 0s ease-in-out;
+  transition: all 0s ease-in-out;
+}
+
+.currentUser {
+  background-color: #0069AA;
+  -webkit-transition: all 0s ease-in-out;
+  -moz-transition: all 0s ease-in-out;
+  -o-transition: all 0s ease-in-out;
+  transition: all 0s ease-in-out;
+}
+
 .rail90 {
   background-color: #D11241;
 }

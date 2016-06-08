@@ -5,7 +5,7 @@ const webserverConfig = {
     
     // optional orchestrate db token
     // how to get: //orchestrate.io
-    orchestrateToken: '784a5718-1c32-443d-b755-5f5f1bd0effb',
+    orchestrateToken: '',
     
     // optional sequelize
     // install: brew install postgresql; brew services start postgresql; 

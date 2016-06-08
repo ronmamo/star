@@ -15,21 +15,20 @@ var webpackconfig = require('./webpack/webpack.config');
 var compiler = webpack(webpackconfig);
 var chalk = require('chalk');
 
-// models
-var models = require('./models').default;
-
-// app
 var config = require('./config').default;
 console.log(chalk.green("config"), config);
 
+// app
 var app = express();
 var router = express.Router();
-
-const routes = require('./routes').default;
-routes(router, models);
-
 app.use(router);
 
+// define sequelize models
+var models = require('./models').default;
+
+// add routes
+const routes = require('./routes').default;
+routes(router, models);
 
 // Serve hot-reloading bundle to client
 app.use(require("webpack-dev-middleware")(compiler, {
@@ -68,6 +67,7 @@ compiler.plugin('done', function () {
 // server
 var http = require('http');
 var server = http.createServer(app);
+
 server.listen(3000, 'localhost', function (err) {
   if (err) throw err;
 

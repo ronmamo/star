@@ -31,7 +31,13 @@ const connect = (models, force = true) => {
       console.log(chalk.red.bold('Could not connect sequelize'), err);
     });
 }
-
+/**
+ * simple express router for sequelize model crud rest operations, exposes:
+ *  find - GET /${API_PATH}?query
+ *  get - GET /${API_PATH}/:id
+ *  create/update - POST /${API_PATH} ${entity}
+ *  delete - DELETE /${API_PATH}/:id
+ */
 export default (router, models) => {
   connect(models);
 

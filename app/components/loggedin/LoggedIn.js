@@ -17,19 +17,23 @@ const createUser = (profile) => {
 }
 
 const styles = {
-  container: {
+  map: {
     align: 'center',
     textAlign: 'center',
     paddingTop: 200
   }
 }
 
+/**
+ * login using google for a given googleAppId, show this.props.children when authenticated
+ */
 @connect(state => ({
   currentUser: state.logged.currentUser
 }), (dispatch, props) => bindActionCreators({...loggedinActions, ...routeActions}, dispatch))
 export default class LoggedIn extends Component {
 
   static propTypes = {
+    googleAppId: PropTypes.string,
     route: PropTypes.object
   }
 
@@ -48,10 +52,10 @@ export default class LoggedIn extends Component {
   render() {
     const {currentUser} = this.props;
     const isLoggedIn = currentUser && loggedinActions.isLoggedIn();
-    const clientId = config.app.googleAppId;
+    const clientId = this.props.googleAppId || config.app.googleAppId;
 
     return isLoggedIn ? <div>{this.props.children}</div> : (
-      <div style={styles.container}>
+      <div style={styles.map}>
         <h1>Login</h1>
         <GoogleLogin
           clientId={clientId}

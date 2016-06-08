@@ -1,9 +1,9 @@
 import Sequelize from 'sequelize';
-import {withLocation} from './index';
+import {withLocation, withImage} from './index';
 
 export default sequelize => {
 
-  var User = sequelize.define('user', Object.assign(withLocation, {
+  var User = sequelize.define('user', Object.assign(withLocation, withImage, {
     name: Sequelize.STRING,
     username: {
       type: Sequelize.STRING,

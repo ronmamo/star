@@ -1,10 +1,14 @@
 import fetch from 'isomorphic-fetch';
 import chalk from 'chalk';
 
+/**
+ * model crud actions and reducer for a given model name, 
+ *  for managing model in db via sequelizeRouter and global state management
+ */
 export default (name) => {
 
-  const list = 'list';
-  const current = 'current';
+  const LIST = 'list';
+  const CURRENT = 'current';
 
   const API_PREFIX = `/api/${name}`;
   const REDUX_POSTFIX = '_' + name.toUpperCase();
@@ -18,8 +22,8 @@ export default (name) => {
 
   const initialState = () => {
     const initial = {};
-    initial[list] = {};
-    initial[current] = null;
+    initial[LIST] = {};
+    initial[CURRENT] = null;
     return initial;
   };
 
@@ -29,7 +33,7 @@ export default (name) => {
 
   const reducer = (state = initialState(), action) => {
     const model = action.model;
-    const stateModels = state[list];
+    const stateModels = state[LIST];
     const actionModels = action.models;
     const actionCurrentModel = action.currentModel;
     switch (action.type) {
@@ -62,9 +66,9 @@ export default (name) => {
           list: assigned
         }
       case SET_CURRENT:
-        let ch = {};
-        ch[current] = actionCurrentModel;
-        return Object.assign(state, ch);
+        let change = {};
+        change[CURRENT] = actionCurrentModel;
+        return Object.assign(state, change);
       default:
         return state;
     }
@@ -92,11 +96,12 @@ export default (name) => {
   }
 
   function update(model) {
+    const headers = {'Content-Type': 'application/json'};
     const body = JSON.stringify(model);
     return {
       type: UPDATE,
       model,
-      promise: fetch(API_PREFIX, {method: 'POST', headers: {'Content-Type': 'application/json'}, body})
+      promise: fetch(API_PREFIX, {method: 'POST', headers: headers, body})
     }
   }
 

@@ -1,11 +1,11 @@
 import Sequelize from 'sequelize';
-import {withLocation} from './index';
+import {withLocation, withImage} from './index';
 
 export default sequelize => {
 
   var User = sequelize.models['user'];
 
-  var Shop = sequelize.define('shop', Object.assign(withLocation, {
+  var Shop = sequelize.define('shop', Object.assign(withLocation, withImage, {
     name: Sequelize.STRING,
     description: Sequelize.TEXT,
     user_id: {
@@ -18,7 +18,7 @@ export default sequelize => {
     }
   }));
 
-  sequelize.define('product', {
+  sequelize.define('product', Object.assign(withImage, {
     name: Sequelize.STRING,
     description: Sequelize.TEXT,
     price: Sequelize.DECIMAL,
@@ -30,5 +30,5 @@ export default sequelize => {
         deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
       }
     }
-  });
+  }));
 }

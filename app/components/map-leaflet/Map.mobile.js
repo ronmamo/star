@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
-  container: {
+  map: {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -36,8 +36,8 @@ class NativeApp extends Component {
   render() {
     const { vehicles } = this.props;
     return (
-      <div style={styles.container}>
-        <View style={styles.container}>
+      <div style={styles.map}>
+        <View style={styles.map}>
           <MapView
             style={styles.map}
             initialRegion={{

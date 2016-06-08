@@ -21,6 +21,9 @@ if (window.navigator && Object.keys(window.navigator).length == 0) {
   window = Object.assign(window, { navigator: { userAgent: 'ReactNative' }});
 }
 
+/**
+ * manages current geo location in state.geo.location
+ */
 @connect(state => ({
   location: state.geo.location
 }), (dispatch, props) => bindActionCreators({...geoActions, ...loggedinActions}, dispatch))

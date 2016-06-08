@@ -5,6 +5,9 @@ import _ from 'lodash';
 import modelActions from "../models/modelActions";
 import * as loggedinActions from "../loggedin/loggedinActions";
 
+/**
+ * manage and persist current user changes including profile and geo location
+ */
 @connect(state => ({
   currentUser: state.logged.currentUser,
   location: state.geo.location
@@ -19,8 +22,8 @@ export default class CurrentUser extends Component {
     const currentUser = this.props.currentUser;
     const nextUser = nextProps.currentUser;
 
-    const userChange = this.isChange(nextUser, currentUser);
-    const locationChange = this.isChange(nextLocation, currentLocation);
+    const userChange = this.diff(nextUser, currentUser);
+    const locationChange = this.diff(nextLocation, currentLocation);
 
     if (userChange || locationChange || !nextUser.id) {
       console.log('user/location changed', userChange, nextLocation);
@@ -47,14 +50,12 @@ export default class CurrentUser extends Component {
     } 
   }
 
-  isChange = (next, current) => {
-    let change = _.reduce(next, (result, value, key) => {
+  diff(next, current) {
+    return _.reduce(next, (result, value, key) => {
       return _.isEqual(value, current[key]) ?
         result : result.concat(key);
     }, []);
-    return change.length != 0 && change;
   }
-
 
   findUserByUsername = (username) =>
     this.props.find({where: {username: username}}).promise.then(res => res.json())
