@@ -194,8 +194,10 @@ The result is:
 
 
 #### Laters
-- Make it work for android and ios...
-- Use Springboot instead/supplement of nodejs web/api server
+- **Have an initial set of components for easily building your own flavoured MVP**
+- PostGis support including geo queries
+- Paypal integration
 - Redis and/or Graphql support
-- Paypal integration, shopping cart
 - Image uploading
+- Make it work for android and ios...
+- Maybe use Springboot instead/supplement of nodejs web/api server
