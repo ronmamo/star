@@ -1,18 +1,13 @@
+import {Actions} from './AvatarCardView'
 import {
   Card, CardActions, CardHeader, CardText, TextField, RaisedButton
 } from "material-ui/lib";
 import {ContentClear, ActionDone, ActionDelete} from "material-ui/lib/svg-icons";
 
-const styles = {
-  right: {
-    float: 'right'
-  }
-}
-
 /**
  * card add/edit view with text field per field, with delete/cancel/save actions
  */
-export const CardEditView = ({model, fields, actions, mode}) => (
+export const CardEditView = ({model, fields, actions, mode, items}) => (
   <Card>
     { mode === 'edit' ?
       <CardHeader title={model.name} subtitle={model.description}/> : <div></div> }
@@ -30,13 +25,7 @@ export const CardEditView = ({model, fields, actions, mode}) => (
       }
     </CardText>
 
-    <CardActions style={styles.right}>
-      { mode === 'edit' ?
-        <RaisedButton label="Delete" icon={<ActionDelete />} onTouchTap={e => actions.onDelete(e, model)}/> :
-        <div></div>}
-      <RaisedButton label="Cancel" icon={<ContentClear />} onTouchTap={e => actions.onCancel(e, model)}/>
-      <RaisedButton label="Save" primary={true} icon={<ActionDone />} onTouchTap={e => actions.onSave(e, model)}/>
-    </CardActions>
+    <Actions model={model} items={items}/>
   </Card>
 )
 

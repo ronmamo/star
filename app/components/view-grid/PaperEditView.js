@@ -52,10 +52,6 @@ export const PaperEditView = ({model, fields, actions, items}) => {
   )
 }
 
-const aa = (files, actions) => {
-  return actions.onChange(files, {image: files[0].preview});
-}
-
 const diff = (e, key) => {
   let change = {};
   change[key] = e.target.value;

@@ -1,11 +1,11 @@
 import React, {Component, PropTypes} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import viewActions from "../components/models/viewActions";
-import modelActions from "../components/models/modelActions";
+import ViewActions from "../components/models/ViewActions";
+import ModelActions from "../components/models/ModelActions";
 import PaperEditView from "../components/view-grid/PaperEditView";
 import GridView from '../components/view-grid/GridView';
-import GridSingleView from '../components/view-grid/GridSignleView';
+import GridSingleView from '../components/view-grid/GridSingleView';
 import {
   RaisedButton, FlatButton, IconButton,
   MenuItem, DropDownMenu, IconMenu,
@@ -29,22 +29,13 @@ const styles = {
  */
 @connect(state => ({
   currentUser: state.logged.currentUser
-}))
+}), (dispatch, props) => bindActionCreators({...ModelActions('product')}, dispatch))
 export default class Products extends Component {
 
-  state = {
-    fields: ['name', 'description'],
-    editFields: ['name', 'description', 'price', 'image']
-  }
-
-  // todo bind on @connect, remove this constructor completely
-  constructor(props) {
-    super(props);
-    this.modelActions = bindActionCreators({...modelActions('product').actions}, props.dispatch);
-    this.viewActions = new viewActions('product', this);
-  }
+  state = {}
 
   componentWillMount() {
+    this.viewActions = new ViewActions('product', this);
     this.viewActions.onLoad();
   }
 
@@ -53,7 +44,9 @@ export default class Products extends Component {
   }
 
   render() {
-    const {models, fields, editFields, mode, selected, editModel, dialog, message} = this.state;
+    const {models, mode, selected, editModel, dialog, message} = this.state;
+    const fields = ['name', 'description'];
+    const editFields = ['name', 'description', 'price', 'image'];
 
     const items = {
       Grid: {action: this.viewActions.clearSelect, Icon: ActionViewModule},

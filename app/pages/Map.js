@@ -5,7 +5,7 @@ import Map, * as Markers from '../components/map-leaflet/Map';
 import * as mapActions from "../components/map-leaflet/mapActions";
 
 /**
- * map view, location aware search, different marker types, layer selection, more info view on hover
+ * map view, different marker types
  */
 @connect(state => ({
   users: state.users.list,

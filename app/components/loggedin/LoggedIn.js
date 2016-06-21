@@ -1,9 +1,10 @@
 import React, {Component, PropTypes} from "react";
-import GoogleLogin from 'react-google-login';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import * as loggedinActions from "./loggedinActions";
 import * as routeActions from "../route/routeActions";
+import {RaisedButton} from "material-ui/lib";
+import GoogleLogin from 'react-google-login';
 import config from '../../config';
 
 const createUser = (profile) => {
@@ -32,8 +33,10 @@ const styles = {
 }), (dispatch, props) => bindActionCreators({...loggedinActions, ...routeActions}, dispatch))
 export default class LoggedIn extends Component {
 
+  state = {}
   static propTypes = {
     googleAppId: PropTypes.string,
+    guest: PropTypes.bool,
     route: PropTypes.object
   }
 
@@ -42,27 +45,43 @@ export default class LoggedIn extends Component {
     console.log("onLogin", response, currentUser);
     if (currentUser) {
       const user = createUser(currentUser.getBasicProfile());
-      this.props.loggedIn(response.code, user);
-      if (this.props.route) {
-        this.props.doRoute(this.props.route);
-      }
+      this.login(response.code, user);
     }
   }
-  
+
+  login(token, user) {
+    this.props.loggedIn(token, user);
+    if (this.props.route) {
+      this.props.doRoute(this.props.route);
+    }
+  }
+
+  onGuestLogin = e => {
+    this.login('', {id: -1, name: 'guest'});
+  }
+
   render() {
     const {currentUser} = this.props;
     const isLoggedIn = currentUser && loggedinActions.isLoggedIn();
-    const clientId = this.props.googleAppId || config.app.googleAppId;
+    const googleAppId = this.props.googleAppId || config.app.googleAppId;
 
     return isLoggedIn ? <div>{this.props.children}</div> : (
       <div style={styles.map}>
         <h1>Login</h1>
-        <GoogleLogin
-          clientId={clientId}
-          buttonText="Login with Google"
-          callback={this.onLogin}
-          offline={true}
-        />
+        { googleAppId &&
+        <div>
+          <GoogleLogin clientId={googleAppId}
+                       buttonText="Login with Google"
+                       callback={this.onLogin}
+                       offline={true}/>
+        </div>
+        }
+        { this.props.guest !== false &&
+        <div>
+          <br/>
+          <RaisedButton label="Continue as Guest" onTouchTap={this.onGuestLogin}/>
+        </div>
+        }
       </div>
     );
   }

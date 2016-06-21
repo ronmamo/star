@@ -1,8 +1,10 @@
 import React, {Component, PropTypes} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import viewActions from "../components/models/viewActions";
-import modelActions from "../components/models/modelActions";
+import ViewActions from "../components/models/ViewActions";
+import ModelActions from "../components/models/ModelActions";
+import * as routeActions from "../components/route/routeActions";
+import * as mapActions from "../components/map-leaflet/mapActions";
 import CardEditView from "../components/view-card/CardEditView";
 import Map, * as Markers from '../components/map-leaflet/Map';
 import TableView from '../components/view-table/TableView';
@@ -32,39 +34,31 @@ const styles = {
  */
 @connect(state => ({
   currentUser: state.logged.currentUser
-}))
+}), (dispatch, props) => bindActionCreators({...ModelActions('shop'), ...mapActions, ...routeActions}, dispatch))
 export default class Shops extends Component {
 
-  state = {
-    fields: ['name', 'description'],
-    editFields: ['name', 'description', 'latitude', 'longitude']
-  }
-
-  // todo bind on @connect, remove this constructor completely
-  constructor(props) {
-    super(props);
-    this.modelActions = bindActionCreators({...modelActions('shop').actions}, props.dispatch);
-    this.viewActions = viewActions('shop', this);
-  }
+  state = {}
 
   componentWillMount() {
+    this.viewActions = ViewActions('shop', this);
     this.viewActions.onLoad();
   }
 
   render() {
-    const {models, fields, editFields, mode, selected, editModel, dialog, message} = this.state;
+    const {models, mode, selected, editModel, dialog, message} = this.state;
     const currentUser = this.props.currentUser;
-
+    const fields = ['name', 'description'];
+    const editFields = ['name', 'description', 'latitude', 'longitude'];
+    const items = {
+      Edit: {Icon: EditorModeEdit, action: this.viewActions.onEdit},
+      Delete: {Icon: ActionDelete, action: this.viewActions.onDelete}
+    }
+    
     let markers = [];
     if (models) markers = markers.concat(Markers.createMarkers(models, 'shop'));
     if (currentUser) markers.push(Markers.marker(currentUser, 'currentUser'));
     const popups = selected ? [Markers.createPopup(selected, <ShopPopup model={selected}/>)] : [];
     const center = selected ? {latitude: selected.latitude, longitude: selected.longitude} : null;
-
-    const items = {
-      Edit: {Icon: EditorModeEdit, action: this.viewActions.onEdit},
-      Delete: {Icon: ActionDelete, action: this.viewActions.onDelete}
-    }
     
     return (
       <div style={styles.root}>

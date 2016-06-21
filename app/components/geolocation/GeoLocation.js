@@ -17,8 +17,13 @@ const createLocation = position => {
   }
 }
 
-if (window.navigator && Object.keys(window.navigator).length == 0) {
-  window = Object.assign(window, { navigator: { userAgent: 'ReactNative' }});
+try {
+  if (window.navigator && Object.keys(window.navigator).length == 0) {
+    window = Object.assign(window, { navigator: { userAgent: 'ReactNative' }});
+  }
+}
+catch (err) {
+  console.log("could not set userAgent")
 }
 
 /**

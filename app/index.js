@@ -18,11 +18,11 @@ import {reducer as geo} from "./components/geolocation/geolocationActions";
 import {reducer as vehicles} from "./components/vehicles/vehiclesActions";
 import {reducer as route} from "./components/route/routeActions";
 import {reducer as map} from "./components/map-leaflet/mapActions";
-import modelActions from './components/models/modelActions';
+import ModelReducer from './components/models/ModelReducer';
 
-const users = modelActions('user').reducer;
-const shops = modelActions('shop').reducer;
-const products = modelActions('product').reducer;
+const users = ModelReducer('user');
+const shops = ModelReducer('shop');
+const products = ModelReducer('product');
 
 // redux store
 const store = createStore(

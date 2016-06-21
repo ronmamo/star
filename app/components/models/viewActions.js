@@ -1,8 +1,4 @@
 import React, {Component, PropTypes} from "react";
-import {bindActionCreators} from "redux";
-import * as routeActions from "../route/routeActions";
-import * as mapActions from "../map-leaflet/mapActions";
-import modelActions from "../models/modelActions";
 import {
   RaisedButton, FlatButton, AutoComplete, Snackbar, Dialog,
   Table, TableHeader, TableHeaderColumn, TableRow
@@ -19,12 +15,10 @@ import config from "../../config";
 export default (name, component) => {
 
   const props = component.props;
-  const dispatch = props.dispatch;
   const Name = name.charAt(0).toUpperCase() + name.slice(1);
 
-  const actions = props.actions || props.modelActions || bindActionCreators({...modelActions(name).actions}, dispatch);
-  const Maps = bindActionCreators({...mapActions}, dispatch);
-  const Routes = bindActionCreators({...routeActions}, dispatch);
+  // modelActions are assumed to be mixed into the given component (using bindActionCreators or else)
+  const modelActions = props;   
 
   // change component's state
   var state = Object.assign(component.state || {}, {
@@ -37,6 +31,7 @@ export default (name, component) => {
     current: props.current
   });
 
+  // todo
   const setState = change => {
     component.setState(Object.assign(state, change));
   }
@@ -51,11 +46,11 @@ export default (name, component) => {
 
   function onSave(e, model) {
     if (model && model.name) {
-      actions.update(model).promise.then(res => res.json())
+      modelActions.update(model).promise.then(res => res.json())
         .then(json => {
           const created = json.created;
           const update = created || model;
-          actions.set([update]);
+          modelActions.set([update]);
           if (created) {
             state.models.push(created);
           } else {
@@ -73,7 +68,7 @@ export default (name, component) => {
   }
 
   function onLoad(query = {limit: 10}) {
-    actions.find(query).promise.then(response => response.json())
+    modelActions.find(query).promise.then(response => response.json())
       .then(data => {
         console.log('find results', data);
         setState({models: data.result});
@@ -83,7 +78,7 @@ export default (name, component) => {
 
   function onDelete(e, model) {
     showDialog("Are you Sure?",
-      e => actions.deleteModel(model).promise.then(res => res.json())
+      e => modelActions.deleteModel(model).promise.then(res => res.json())
         .then(response => {
           state.models.splice(state.models.indexOf(model), 1);
           clearDialog();
@@ -123,8 +118,12 @@ export default (name, component) => {
 
   function onShow(e, model) {
     if (model.latitude) {
-      Maps.setCenter({latitude: model.latitude, longitude: model.longitude});
-      Routes.doRoute(config.app.routes.Map);
+      if (typeof props.setCenter === 'function') {
+        props.setCenter({latitude: model.latitude, longitude: model.longitude});
+      }
+      if (typeof props.doRoute === 'function') {
+        props.doRoute(config.app.routes.Map);
+      }
     }
   }
 

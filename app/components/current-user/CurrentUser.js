@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import _ from 'lodash';
-import modelActions from "../models/modelActions";
+import ModelActions from "../models/ModelActions";
 import * as loggedinActions from "../loggedin/loggedinActions";
 
 /**
@@ -11,7 +11,7 @@ import * as loggedinActions from "../loggedin/loggedinActions";
 @connect(state => ({
   currentUser: state.logged.currentUser,
   location: state.geo.location
-}), (dispatch, props) => bindActionCreators({...modelActions('user').actions, ...loggedinActions}, dispatch))
+}), (dispatch, props) => bindActionCreators({...ModelActions('user'), ...loggedinActions}, dispatch))
 export default class CurrentUser extends Component {
 
   componentWillUpdate(nextProps, nextState) {
@@ -32,7 +32,9 @@ export default class CurrentUser extends Component {
       if (locationChange) {
         user = Object.assign(user, nextLocation);
       }
-      if (user && !user.id) {
+      if (user.name === 'guest') {
+        //this.props.updateCurrentUser(user);
+      } else if (user && !user.id) {
         this.findUserByUsername(user.username)
           .then(found => {
             if (found) {

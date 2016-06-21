@@ -11,7 +11,7 @@ const styles = {
 /**
  * avatar card view of users, with show in map/edit actions
  */
-export const AvatarCardView = ({models, fields, actions}) => {
+export const AvatarCardView = ({models, fields, actions, items}) => {
   const modelsList = models ? Object.keys(models).map(key => models[key]) : [];
   return (
     <div>
@@ -30,15 +30,20 @@ export const AvatarCardView = ({models, fields, actions}) => {
               </CardText>
             ))
           }
-          <CardActions style={styles.right} expandable={true}>
-            <RaisedButton label="Show" icon={<MapsPlace />} disabled={!model.latitude}
-                          onTouchTap={e => actions.onShow(e, model)}/>
-            <RaisedButton label="Edit" icon={<EditorModeEdit />} onTouchTap={e => actions.onEdit(e, model)}/>
-          </CardActions>
+          <Actions model={model} items={items} expandable={true}/>
         </Card>
       ))}
     </div>
   )
 }
+
+export const Actions = ({model, items}) => (
+  <CardActions style={styles.right}>
+    { Object.keys(items).map(key => {
+      const Icon = items[key].Icon;
+      return <RaisedButton key={key} label={key} icon={<Icon />} onTouchTap={e => items[key].action(e, model)}/>
+    })}
+  </CardActions>
+)
 
 export default AvatarCardView

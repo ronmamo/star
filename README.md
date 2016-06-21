@@ -1,3 +1,4 @@
+
 # Star
 ### Yet another React starter kit
 
@@ -29,37 +30,22 @@ class SomeComponent extends Component {
 }
 ```
 
-Another component, `<LoggedIn/>` will take care of google login, updating current user state `state.logged.currentUser`:
-```
-@connect(state => ({
-  currentUser: state.logged.currentUser
-}))
-class SomeComponent extends Component {
-  render() {
-    ...
-    <LoggedIn googleAppId={...}>
-        <div>CurrentUser: {this.props.currentUser}</div>
-    </LoggedIn>
-    ...
-  }
-}
-```
-
 ### High Order Components
 
-The `components` folder contains some high order components.
-
-Some of the components included:
+Some of the components included in the `components` folder:
+- `LoggedIn` - google login 
 - `Map` - leaflet map view
 - `Header`, `Bottom` - material-ui app bar and bottom navigation
 - `CurrentUser` - persist current user changes including profile and geo location
 - `Route` - a very simple routing
 
-For model view and edit, some material-ui components are provided for card/grid/table views, 
-such as `AvatarCardView`, `TableView`, `GridView`, `CardEditView`, `PaperEditView`.
+For model view and edit, some Material-UI components are provided for card/grid/table views, such as:
+- `AvatarCardView`
+- `TableView`
+- `GridView`
 
-For model operations, `modelActions` can be used for executing async rest operations against the server via `sequelizeRouter`, 
-such as get/find/add/update/delete. 
+For model operations, `modelActions` can be used for executing 
+async rest crud operations against the server via `sequelizeRouter` 
 
 `viewActions` is an optional simple helper, encapsulating common model view behaviours, 
 such as local models management, mode changes, show dialog and message.
@@ -91,17 +77,13 @@ class MyModel extends Component {
     <CardEditView model={selected} fields={field} actions={this.viewActions}/>
     ...
   }
-  
-  onSelect = (e, model) => { this.setState({selected: model}) }
-  onSave = (e, model) => { this.props.Users.update(model) ... }
   ...
 ```
 
 ### Server side 
-`web-server/server.js` is an express application, with sequelize support.
+`web-server/server.js` is an Express application, with Webpack hot reload and Sequelize support.
 
-Just add a model definition to `web-server/models`, 
-and `SequelizeRouter` will be used for adding rest router for each sequelize model definition, exposing: 
+`SequelizeRouter` will be used for adding rest router for each Sequelize model definition, exposing: 
  - `GET /v1/model?query` - find
  - `GET /v1/model/:id`
  - `POST /v1/model {entity}` - upsert 
@@ -169,9 +151,10 @@ The result is:
 ![output](https://cloud.githubusercontent.com/assets/2588829/15898744/123aae8e-2da2-11e6-8b0e-b2af6f9397e7.gif)
 
 ### How to run
+`clone `
 - Look at web-server/config.js and app/config.js
-- Install Postgresql, CREATE DATABASE stardb
-- Add googleAppId to the app/config.js
+- Install PostgreSQL, CREATE DATABASE stardb
+- Configure app/config.js with google app clientId (using console.developers.google.com)
 - npm install
 - npm run dev
 - (Optionally) if using orchestrate.io and usersRouter, add orchestrateToken to the web-server/config.js
@@ -186,11 +169,12 @@ The result is:
 - Google login (used in LoggedIn component)
 - [Leaflet](http://leafletjs.com/) OpenStreetMap
 - Helmet
-- [orchestrate.io](orchestrate.io) - the-very-cool orchestrate db as a service (used in UsersDb component)
+- [orchestrate.io](orchestrate.io) - the-very-cool orchestrate db as a service (optional)
 - socket.io client - for streaming (used in VehicleSocket
 
 #### Server
 - Express
+- Webpack
 - Sequelize
 
 
