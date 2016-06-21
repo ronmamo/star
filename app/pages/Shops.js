@@ -14,7 +14,7 @@ import {
   Table, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableBody, TableFooter
 } from "material-ui/lib";
 import {
-  ActionDelete, EditorModeEdit, MapsNearMe, ContentAdd
+  ActionDelete, EditorModeEdit, MapsNearMe, ContentAdd, ContentClear, ActionDone
 } from "material-ui/lib/svg-icons";
 
 const styles = {
@@ -53,7 +53,12 @@ export default class Shops extends Component {
       Edit: {Icon: EditorModeEdit, action: this.viewActions.onEdit},
       Delete: {Icon: ActionDelete, action: this.viewActions.onDelete}
     }
-    
+    const editItems = {
+      Delete: {Icon: ActionDelete, action: this.viewActions.onDelete},
+      Cancel: {Icon: ContentClear, action: this.viewActions.onCancel},
+      Save: {Icon: ContentClear, action: this.viewActions.onSave}
+    }
+
     let markers = [];
     if (models) markers = markers.concat(Markers.createMarkers(models, 'shop'));
     if (currentUser) markers.push(Markers.marker(currentUser, 'currentUser'));
@@ -76,7 +81,7 @@ export default class Shops extends Component {
         { (mode == 'add' || mode == 'edit') &&
         <div>
           <h2>{`${mode == 'add' ? 'Add' : 'Edit'} Shop`}</h2>
-          <CardEditView model={editModel} fields={editFields} actions={this.viewActions}/>
+          <CardEditView model={editModel} fields={editFields} actions={this.viewActions} items={editItems}/>
         </div>
         }
 
