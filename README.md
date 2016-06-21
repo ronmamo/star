@@ -35,7 +35,7 @@ class SomeComponent extends Component {
 Some of the components included in the `components` folder:
 - `LoggedIn` - google login 
 - `Map` - leaflet map view
-- `Header`, `Bottom` - material-ui app bar and bottom navigation
+- `Header`, `Bottom` - Material-UI app bar and bottom navigation
 - `CurrentUser` - persist current user changes including profile and geo location
 - `Route` - a very simple routing
 
@@ -155,11 +155,11 @@ The result is:
 - React, React native
 - [Redux](https://github.com/reactjs/redux)
 - Webapck w/ hot reload
-- [material-ui](material-ui.com) 
+- [Material-UI](http://www.material-ui.com) 
 - Google login (used in LoggedIn component)
 - [Leaflet](http://leafletjs.com/) OpenStreetMap
 - Helmet
-- [orchestrate.io](orchestrate.io) - the-very-cool orchestrate db as a service (optional)
+- [orchestrate.io](http://orchestrate.io) - the-very-cool orchestrate db as a service (optional)
 - socket.io client - for streaming (used in VehicleSocket
 
 #### Server
