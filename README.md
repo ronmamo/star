@@ -43,38 +43,35 @@ For model view and edit, some Material-UI components are provided for card/grid/
 - `AvatarCardView`
 - `TableView`
 - `GridView`
+- `EditCardView`
+- `PaperEditView`
 
-For model operations, `modelActions` can be used for executing 
+For model operations, `ModelActions` can be used for executing 
 async rest crud operations against the server via `sequelizeRouter` 
 
-`viewActions` is an optional simple helper, encapsulating common model view behaviours, 
+`ViewActions` is an optional simple helper, encapsulating common model view behaviours, 
 such as local models management, mode changes, show dialog and message.
 
 Example of a model component:
 ```
 @connect(state => ({
   currentUser: state.logged.currentUser
-})) 
+}), (dispatch, props) => bindActionCreators({...ModelActions('user')}, dispatch))
 class MyModel extends Component {
 
   state = {}
   
-  constructor(props) {
-    super(props);
-    this.modelActions = bindActionCreators({...modelActions('user').actions}, props.dispatch);
-    this.viewActions = viewActions('user', this);
-  }
-
   componentWillMount() {
+    this.viewActions = ViewActions('user', this);
     this.viewActions.onLoad(); // on load query and set state
   }
   
   render() {
-    const {users, selected} = this.state; // injected by viewActions
+    const {users, editModel, mode} = this.state; // injected by viewActions
     const fields = ['username', 'email', 'location']
     ...
-    <AvatarCardView models={users} fields={fields} actions={this.viewActions}/>
-    <CardEditView model={selected} fields={field} actions={this.viewActions}/>
+    { mode == 'view' && <AvatarCardView models={users} fields={fields} actions={this.viewActions}/> }
+    { (mode == 'add' || mode == 'edit') && <CardEditView model={editModel} fields={field} actions={this.viewActions}/> }
     ...
   }
   ...
@@ -91,12 +88,6 @@ class MyModel extends Component {
  
 On the client side, `ModelActions` is used for sending requests to `SequelizeRouter`.
 
-```
-  sequelize.define('user', {...})
-  ...
-  sequelizeRouter(router, sequelize.models)
-```
-
 ### Example
 So when the Main component looks like:
 
@@ -112,7 +103,7 @@ export default class Main extends Component {
       <div>
         <Header title={app.name} routes={routes}/>
 
-        <LoggedIn route={routes.Map}>
+        <LoggedIn googleAppId={...} guest={true} route={routes.Map}>
 
           <GeoLocation/>
           <CurrentUser/>
@@ -157,7 +148,6 @@ The result is:
 - Configure app/config.js with google app clientId (using console.developers.google.com)
 - npm install
 - npm run dev
-- (Optionally) if using orchestrate.io and usersRouter, add orchestrateToken to the web-server/config.js
 
 ### Techs
 
@@ -165,7 +155,7 @@ The result is:
 - React, React native
 - [Redux](https://github.com/reactjs/redux)
 - Webapck w/ hot reload
-- [material-ui](material-ui.com) ootb (used in Header component)
+- [material-ui](material-ui.com) 
 - Google login (used in LoggedIn component)
 - [Leaflet](http://leafletjs.com/) OpenStreetMap
 - Helmet
@@ -176,7 +166,7 @@ The result is:
 - Express
 - Webpack
 - Sequelize
-
+- Postgresql
 
 #### Laters
 - **Have an initial set of components for easily building your own flavoured MVP**
