@@ -1,5 +1,5 @@
 
-# Star
+# Star_*_
 ### Yet another React starter kit
 
 **Playing around with es6 and [React](https://facebook.github.io/react/)/[React-Native](https://facebook.github.io/react-native/). Based on [pdxlivebus](https://github.com/browniefed/pdxlivebus) and other starter kits.**
@@ -142,7 +142,7 @@ The result is:
 ![output](https://cloud.githubusercontent.com/assets/2588829/15898744/123aae8e-2da2-11e6-8b0e-b2af6f9397e7.gif)
 
 ### How to run
-`clone `
+- `clone https://github.com/ronmamo/star.git`
 - Look at web-server/config.js and app/config.js
 - Install PostgreSQL, CREATE DATABASE stardb
 - Configure app/config.js with google app clientId (using console.developers.google.com)
