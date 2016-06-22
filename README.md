@@ -1,5 +1,5 @@
 
-# Star_*_
+# Star
 ### Yet another React starter kit
 
 **Playing around with es6 and [React](https://facebook.github.io/react/)/[React-Native](https://facebook.github.io/react-native/). Based on [pdxlivebus](https://github.com/browniefed/pdxlivebus) and other starter kits.**
