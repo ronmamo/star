@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from "react";
 import {Paper} from "material-ui";
-import {EnhancedButton} from "material-ui/internal/EnhancedButton";
+import EnhancedButton from "material-ui/internal/EnhancedButton";
 import {deepOrange500, grey600, black} from 'material-ui/styles/colors';
 
 const styles = {

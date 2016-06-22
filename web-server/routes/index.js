@@ -1,5 +1,4 @@
 import chalk from 'chalk';
-import usersRouter from './usersRouter';
 import sequelizeRouter from './sequelizeRouter';
 
 const logRoutes = router => {
@@ -12,7 +11,6 @@ const logRoutes = router => {
 };
 
 export default (router, models) => {
-  usersRouter(router);
   sequelizeRouter(router, models);
   logRoutes(router);
 

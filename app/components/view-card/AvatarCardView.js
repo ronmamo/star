@@ -15,7 +15,7 @@ export const AvatarCardView = ({models, fields, actions, items}) => {
   return (
     <div>
       {modelsList.map(model => (
-        <Card key={model.id} expanded={true} onExpandChange={e => actions.onSelect(e, model)}>
+        <Card key={model.id} onExpandChange={e => actions.onSelect(e, model)}>
           <CardHeader title={model.name}
                       subtitle={model.email}
                       actAsExpander={true}
@@ -29,7 +29,10 @@ export const AvatarCardView = ({models, fields, actions, items}) => {
               </CardText>
             ))
           }
-          <Actions model={model} items={items} expandable={true}/>
+          <CardText key="actions" expandable={true}>
+            <Actions model={model} items={items}/>
+            <br/><br/><br/>
+          </CardText>
         </Card>
       ))}
     </div>
