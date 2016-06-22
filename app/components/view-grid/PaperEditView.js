@@ -1,5 +1,4 @@
-import {Paper, Divider, TextField, RaisedButton,} from "material-ui/lib";
-import {ContentClear, ActionDone, ActionDelete} from "material-ui/lib/svg-icons";
+import {Paper, Divider, TextField, RaisedButton,} from "material-ui";
 import Dropzone from 'react-dropzone';
 
 const styles = {

@@ -1,9 +1,5 @@
 import React, {Component, PropTypes} from "react";
-import {
-  RaisedButton, FlatButton, AutoComplete, Snackbar, Dialog,
-  Table, TableHeader, TableHeaderColumn, TableRow
-} from "material-ui/lib";
-
+import {FlatButton, Snackbar, Dialog,} from "material-ui";
 import config from "../../config";
 
 /**
@@ -18,7 +14,7 @@ export default (name, component) => {
   const Name = name.charAt(0).toUpperCase() + name.slice(1);
 
   // modelActions are assumed to be mixed into the given component (using bindActionCreators or else)
-  const modelActions = props;   
+  const modelActions = props;
 
   // change component's state
   var state = Object.assign(component.state || {}, {
@@ -101,7 +97,7 @@ export default (name, component) => {
       [currentUser.latitude, currentUser.longitude] || [];
     setState({editModel: Object.assign({}, location ? {latitude: location[0], longitude: location[1]} : {})});
   }
-  
+
   function onEdit(e, model = Object.assign({}, props.current)) {
     setMode('edit');
     setState({editModel: model});

@@ -3,12 +3,12 @@ import thunk from 'redux-thunk';
 import {createStore, applyMiddleware} from "redux";
 import {combineReducers} from "redux";
 import {Provider} from "react-redux";
-import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
-import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {
   cyan500, deepOrange500, red500, grey400, grey500, grey600, grey700,
   transparent, lightWhite, white, darkWhite, lightBlack, black
-} from 'material-ui/lib/styles/colors';
+} from 'material-ui/styles/colors';
 import Helmet from 'react-helmet';
 import Main from './main';
 import config from './config';

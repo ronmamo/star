@@ -4,8 +4,8 @@ import {bindActionCreators} from "redux";
 import * as loggedinActions from "../loggedin/loggedinActions";
 import * as routeActions from "../route/routeActions";
 
-import {Divider, AppBar, IconButton, IconMenu, MenuItem} from "material-ui/lib";
-import {ActionStars, NavigationMoreVert} from "material-ui/lib/svg-icons";
+import {Divider, AppBar, IconButton, IconMenu, MenuItem} from "material-ui";
+import {ActionStars, NavigationMoreVert} from "material-ui/svg-icons";
 
 const styles = {
   title: {

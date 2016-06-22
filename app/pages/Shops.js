@@ -9,13 +9,8 @@ import CardEditView from "../components/view-card/CardEditView";
 import Map, * as Markers from '../components/map-leaflet/Map';
 import TableView from '../components/view-table/TableView';
 import SplitPane from 'react-split-pane';
-import {
-  RaisedButton, FlatButton, FontIcon, AutoComplete, Snackbar, Dialog, TextField, Toggle,
-  Table, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableBody, TableFooter
-} from "material-ui/lib";
-import {
-  ActionDelete, EditorModeEdit, MapsNearMe, ContentAdd, ContentClear, ActionDone
-} from "material-ui/lib/svg-icons";
+import {FlatButton, AutoComplete} from "material-ui";
+import {ActionDelete, EditorModeEdit, ContentAdd, ContentClear} from "material-ui/svg-icons";
 
 const styles = {
   root: {
@@ -64,7 +59,7 @@ export default class Shops extends Component {
     if (currentUser) markers.push(Markers.marker(currentUser, 'currentUser'));
     const popups = selected ? [Markers.createPopup(selected, <ShopPopup model={selected}/>)] : [];
     const center = selected ? {latitude: selected.latitude, longitude: selected.longitude} : null;
-    
+
     return (
       <div style={styles.root}>
         { mode == 'view' &&

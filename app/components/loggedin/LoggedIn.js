@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import * as loggedinActions from "./loggedinActions";
 import * as routeActions from "../route/routeActions";
-import {RaisedButton} from "material-ui/lib";
+import {RaisedButton} from "material-ui";
 import GoogleLogin from 'react-google-login';
 import config from '../../config';
 

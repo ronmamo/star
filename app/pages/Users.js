@@ -8,14 +8,10 @@ import * as mapActions from "../components/map-leaflet/mapActions";
 import Bottom from '../components/bottom/Bottom';
 import AvatarCardView from '../components/view-card/AvatarCardView';
 import CardEditView from '../components/view-card/CardEditView';
+import {AutoComplete} from 'material-ui';
 import {
-  RaisedButton, FlatButton, AutoComplete, Snackbar, Dialog, FontIcon,
-  Table, TableHeader, TableHeaderColumn, TableRow, Paper, EnhancedButton
-} from "material-ui/lib";
-import {
-  SocialGroupAdd, ActionFavorite, ActionFavoriteBorder, MapsNearMe,
-  ContentClear, ActionDone, ActionDelete, MapsPlace, EditorModeEdit
-} from "material-ui/lib/svg-icons";
+  SocialGroupAdd, ActionFavorite, MapsNearMe, ContentClear, ActionDelete, MapsPlace, EditorModeEdit
+} from "material-ui/svg-icons";
 
 /**
  * card view with avatar, search bar, switch to edit view, add/edit/delete actions,
@@ -27,7 +23,7 @@ import {
 }), (dispatch, props) => bindActionCreators({...ModelActions('user'), ...mapActions, ...routeActions}, dispatch))
 export default class Users extends Component {
 
-  state = {} 
+  state = {}
 
   componentWillMount() {
     this.viewActions = ViewActions('user', this);
@@ -67,14 +63,14 @@ export default class Users extends Component {
         { (mode == 'add' || mode == 'edit') &&
         <div>
           <h2>{`${mode == 'add' ? 'Add' : 'Edit'} User`}</h2>
-          <CardEditView key={mode} model={editModel} fields={editFields} actions={this.viewActions} mode={mode} 
+          <CardEditView key={mode} model={editModel} fields={editFields} actions={this.viewActions} mode={mode}
                         items={editItems}/>
         </div>
         }
 
         { dialog }
         { message }
-        
+
         { bottomItems && (
           <div>
             <br/><br/><br/>

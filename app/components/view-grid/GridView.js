@@ -1,5 +1,5 @@
-import {IconButton, GridList, GridTile} from "material-ui/lib";
-import {ToggleStarBorder, ContentAdd, EditorModeEdit} from "material-ui/lib/svg-icons";
+import {IconButton, GridList, GridTile} from "material-ui";
+import {ToggleStarBorder, ContentAdd} from "material-ui/svg-icons";
 
 const styles = {
   root: {

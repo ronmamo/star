@@ -6,17 +6,8 @@ import ModelActions from "../components/models/ModelActions";
 import PaperEditView from "../components/view-grid/PaperEditView";
 import GridView from '../components/view-grid/GridView';
 import GridSingleView from '../components/view-grid/GridSingleView';
-import {
-  RaisedButton, FlatButton, IconButton,
-  MenuItem, DropDownMenu, IconMenu,
-  AutoComplete, Snackbar, Dialog,
-  Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle,
-  Table, TableHeader, TableHeaderColumn, TableRow
-} from "material-ui/lib";
-import {
-  SocialGroupAdd, ActionFavorite, ActionFavoriteBorder, MapsNearMe, NavigationExpandMore, ActionViewModule,
-  EditorModeEdit, ToggleStarBorder, ContentClear, ActionDone, ActionDelete
-} from "material-ui/lib/svg-icons";
+import {MenuItem, DropDownMenu, Toolbar, ToolbarGroup, ToolbarTitle,} from "material-ui";
+import {ActionViewModule, EditorModeEdit, ToggleStarBorder, ContentClear, ActionDelete} from "material-ui/svg-icons";
 
 const styles = {
   toolbar: {

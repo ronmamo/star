@@ -1,8 +1,5 @@
 import {Actions} from './AvatarCardView'
-import {
-  Card, CardActions, CardHeader, CardText, TextField, RaisedButton
-} from "material-ui/lib";
-import {ContentClear, ActionDone, ActionDelete} from "material-ui/lib/svg-icons";
+import {Card, CardHeader, CardText, TextField} from "material-ui";
 
 /**
  * card add/edit view with text field per field, with delete/cancel/save actions

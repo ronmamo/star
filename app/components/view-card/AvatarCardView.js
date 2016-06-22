@@ -1,5 +1,4 @@
-import {Card, CardActions, CardHeader, CardText, Avatar, RaisedButton} from "material-ui/lib";
-import {MapsPlace, EditorModeEdit} from "material-ui/lib/svg-icons";
+import {Card, CardActions, CardHeader, CardText, Avatar, RaisedButton} from "material-ui";
 import gravatar from 'gravatar';
 
 const styles = {

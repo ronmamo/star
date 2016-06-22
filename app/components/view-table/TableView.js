@@ -1,9 +1,6 @@
 import React, {Component, PropTypes} from 'react';
-import {
-  Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TextField,
-  Toggle, EnhancedButton, RaisedButton
-} from 'material-ui/lib';
-
+import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui';
+import EnhancedButton from 'material-ui/internal/EnhancedButton'
 const styles = {
   icon: {
     marginTop: '10px'
@@ -70,7 +67,8 @@ export default class TableView extends Component {
               { Object.keys(items).map((key, index) => {
                 const Icon = items[key].Icon;
                 const action = items[key].action;
-                return <ActionButton Icon={Icon} action={e => action(e, model)} selected={selected.indexOf(index) !== -1}/>;
+                return <ActionButton Icon={Icon} action={e => action(e, model)}
+                                     selected={selected.indexOf(index) !== -1}/>;
               })}
             </TableRow>
           ))}
